@@ -2,7 +2,7 @@
 
 cd /etc/nginx/sites-available/
 
-echo "Ingresa el dominio completo (ejemplo: midominio.com)"
+echo "Ingresa el dominio completo (ejemplo: midominio.com o subdominio.midominio.com)"
 read full_domain
 
 # Obtener el nombre del dominio y su extensión.
@@ -11,6 +11,9 @@ domain_extension=$(echo $full_domain | cut -d. -f2-)
 
 echo "Ingresa el puerto utilizado del contenedor"
 read puerto
+
+# Generar el certificado SSL con Certbot
+sudo certbot certonly --nginx -d $full_domain -d www.$full_domain
 
 cat << EOF > $full_domain.conf
 
